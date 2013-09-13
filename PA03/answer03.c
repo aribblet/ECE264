@@ -62,6 +62,30 @@
 
 int * readIntegers(const char * filename, int * numberOfIntegers)
 {
+  FILE * freader;
+
+  int count = 0; //number of ints
+  int temp = 0; //temporary location
+  int index = 0; //index for array
+  int *array; //array for numbers
+
+  //Open the file
+  freader = fopen(filename, "r");
+
+  //Test if successful
+  if(freader = NULL)
+    {
+      return NULL;
+    }
+
+  while (fscanf(freader, "%d", &temp) == 1)
+    {
+      count++;
+    }
+
+  *numberOfIntegers = count;
+
+  fclose(freader);
     return NULL;
 }
 
