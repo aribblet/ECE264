@@ -62,23 +62,23 @@
 
 int * readIntegers(const char * filename, int * numberOfIntegers)
 {
-  FILE * fptr;
+  FILE * freader;
 
   int count = 0; //number of ints
   int temp = 0; //temporary location
-  // int index = 0; //index for array
-  // int *arr; //array for numbers
+  int index = 0; //index for array
+  int *arr; //array for numbers
 
   //Open the file
-  fptr = fopen(filename, "r");
+  freader = fopen(filename, "r");
 
   //Test if successful
-  if(fptr == NULL)
+  if(freader == NULL)
     {
       return NULL;
     }
   //Reading the File
-  while (fscanf(fptr, "%d", & temp) == 1)
+  while (fscanf(freader, "%d", & temp) == 1)
     {
       count++;
     }
@@ -86,10 +86,18 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
   * numberOfIntegers = count;
   
   //Creating an Array of the integers
-  //arr = malloc(sizeof(int) *count);
+  arr = malloc(sizeof(int) *count);
+  fseek(freader, 0, SEEK_SET);
 
-  fclose(fptr);
-    return NULL;
+  while (fscanf(freader, "%d", & temp) == 1)
+    {
+      
+      arr[index] = temp;
+      index++;
+    }
+
+  fclose(freader);
+  return arr;
 }
 
 /**
