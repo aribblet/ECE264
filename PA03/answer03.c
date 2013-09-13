@@ -139,21 +139,15 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
-  int pivot = arr[0];
-  int leftside = 1; 
-  int rightside = (length - 1);
-  int swap = 0; //used to swap both left and right values
-
-  //The Sorting loops
-  while(arr[left] < pivot)
-    {
-      left++;
-    }
-  
-
-  
-  
+  int passlow = 0; //first index of the array
+  int passhigh = length; //the last index of the array
+  sorthelper(arr, passlow, passhigh); //Call the function
 }
+
+void sorthelper(int * arr, int passlow, int passhigh)
+{
+  int left = passlow + 1; //the first index of the array to check
+
 
 /**
  * Use binary search to find 'key' in a sorted array of integers
