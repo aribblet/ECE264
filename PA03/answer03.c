@@ -139,7 +139,20 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  */
 void sort(int * arr, int length)
 {
-    
+  int pivot = arr[0];
+  int leftside = 1; 
+  int rightside = (length - 1);
+  int swap = 0; //used to swap both left and right values
+
+  //The Sorting loops
+  while(arr[left] < pivot)
+    {
+      left++;
+    }
+  
+
+  
+  
 }
 
 /**
