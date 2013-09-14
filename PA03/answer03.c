@@ -137,18 +137,54 @@ int * readIntegers(const char * filename, int * numberOfIntegers)
  * sort.
  *
  */
+void sorthelper(int* arr, int passlow, int passhigh)
+{
+  int pivot = arr[0];
+  int left = passlow + 1; //the first index of the array to check
+  int index1 = passlow; //Constant left index
+  int right = passhigh;
+  int index2 = passhigh;
+  int swap = 0;
+  int temp = 0;
+
+  if(index1 - index2 == 1)
+  {
+    return;
+  }
+  else
+    {
+      while(left < right)
+	{
+	  while(arr[left] < pivot)
+	    {
+	      left++;
+	    }
+	  while(arr[right] > pivot)
+	    {
+	      right--;
+	    }
+	  if(left > right)
+	    {
+	      arr[left] = swap;
+	      arr[left] = arr[right];
+	      arr[right] = swap;
+	      left++;
+	      right--;
+	     }
+	}
+      //      if(
+      temp = arr[index2];
+      arr[index2] = arr[index2 + 1];
+      arr[index2 + 1] = temp;
+    }
+}
+
 void sort(int * arr, int length)
 {
   int passlow = 0; //first index of the array
   int passhigh = length; //the last index of the array
-  sorthelper(arr, passlow, passhigh); //Call the function
+  sorthelper( * arr, passlow, passhigh); //Call the function
 }
-
-void sorthelper(int * arr, int passlow, int passhigh)
-{
-  int left = passlow + 1; //the first index of the array to check
-
-
 /**
  * Use binary search to find 'key' in a sorted array of integers
  *
