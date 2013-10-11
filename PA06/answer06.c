@@ -172,6 +172,7 @@
 int freadhelper(* fptr);
 struct Image * loadImage(const char* filename)
 {
+  struct ImageHeader ImageHeader;
   FILE * fptr;
   //Variables for the 16 bytes
   int bytes = 0;
@@ -207,11 +208,18 @@ struct Image * loadImage(const char* filename)
      printf("allocating memory for image failed.\n");
      return EXIT_FAILURE;
    }
+
+ struct Image *image = NULL;
+
+ image = malloc(sizeof(struct Image));
+ image -> width = x;
+ image -> height = y;
+ image -> comment = comment;
+ image -> data = malloc(sizeof(uint8_t) * x * y);
  
+ freeImage(image);
  fclose(fptr);
- free(comment);
- free(memory);
- return NULL;
+ return image;
 }
 
 int freadhelper(* fptr)
@@ -231,7 +239,18 @@ int freadhelper(* fptr)
       return 0;
     }
   x = ImageHeader.width;
+  if( x == 0)
+    {
+      printf("width is 0");
+      return 0;
+    }
   y = ImageHeader.height;
+  if (y == 0)
+    {
+      printf("height is 0");
+      return 0;
+    }
+
   if ( x * y > 0)
     {
       printf("Width x Height is not sane.\n");
@@ -259,11 +278,13 @@ int freadhelper(* fptr)
  */
 void freeImage(struct Image * image)
 {
-  struct Image
-  if (image == NULL)
+  if(image == NULL)
     {
-     return EXIT_FAILURE;
+      return;
     }
+  free(image -> memory);
+  free(image -> data);
+  free(image);
 }
 
 /*
