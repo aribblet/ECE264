@@ -177,9 +177,8 @@ struct Image * loadImage(const char* filename)
   int bytes = 0;
   int fail;
   int magic;
-  //Check that the width x height is logical
-  int width; //This is the width of the picture
-  int height; //This is the height of the picture
+  char * comment;
+  char * memory;
  
   fptr = fopen(filename, "r");
   if (fptr == NULL)
@@ -192,8 +191,26 @@ struct Image * loadImage(const char* filename)
    {
      return EXIT_FAILURE;
    }
- malloc
+ comment = (char *) malloc(sizeof(int)*magic);
+ if (sizeof(int)comment == 0)
+   {
+     printf("comment malloc failed.\n");
+     return EXIT_FAILURE;
+   }
+ int x = ImageHeader.width;
+ int y = ImageHeader.height;
+ int z = x * y;
+
+ memory = (char*)malloc(sizeof(char)*z);
+ if (memory == NULL)
+   {
+     printf("allocating memory for image failed.\n");
+     return EXIT_FAILURE;
+   }
  
+ fclose(fptr);
+ free(comment);
+ free(memory);
  return NULL;
 }
 
