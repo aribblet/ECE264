@@ -224,6 +224,7 @@ struct Image * loadImage(const char* filename)
 
 int freadhelper(* fptr)
 {
+  struct ImageHeader ImageHeader;
   int fail; //tests if fails
   uint32_t x;
   uint32_t y;
@@ -256,7 +257,7 @@ int freadhelper(* fptr)
       printf("Width x Height is not sane.\n");
       return 0;
     }
-  uint32_t z = comment_len;
+  uint32_t z = ImageHeader.comment_len;
   if(z == 0)
     {
       printf("Comment is Null.\n");
@@ -282,9 +283,10 @@ void freeImage(struct Image * image)
     {
       return;
     }
-  free(image -> memory);
   free(image -> data);
   free(image);
+  free(memory);
+  free(comment);
 }
 
 /*
@@ -313,6 +315,23 @@ void freeImage(struct Image * image)
  */
 void linearNormalization(struct Image * image)
 {
-
+  int max = 0;
+  int min = 255;
+  int x; //Counter 1
+  for(x = 0; counter < image -> width * image -> height; x++)
+    {
+      if(image -> data[x] > max)
+	{
+	  max = image -> data[x];
+	}
+      if(image -> data[x] < min)
+	{
+	  min = image -> data[x];
+	}
+    }
+  for(x = 0; x < image -> width * image -> height; x++)
+    {
+      image -> data[x] = (image -> data[x] - min) * 255 / (max - min);
+    }
 }
 
